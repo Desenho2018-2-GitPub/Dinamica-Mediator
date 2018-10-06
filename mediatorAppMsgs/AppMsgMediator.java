@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class AppMsgMediator implements Mediator {
  
     protected ArrayList<AppMsg> destinations;
@@ -14,15 +16,17 @@ public class AppMsgMediator implements Mediator {
     public void send(String msg, AppMsg appMsg) {
         for (AppMsg destinationAppMsg : destinations) {
             String formattedMsg = setPrefix(destinationAppMsg, msg);
-            appMsg.receiveMsg(formattedMsg); 
+            destinationAppMsg.receiveMessage(formattedMsg); 
         }
     }
  
     private String setPrefix(AppMsg appMsg, String msg) {
+        String formattedMsg = "";
         if (appMsg instanceof WppAppMsg) {
-            return "(Message for WhatsApp) " + msg;
+            formattedMsg = "(Message for WhatsApp) " + msg;
         } else if (appMsg instanceof TgAppMsg) {
-            return "(Message for Telegram) " + msg;
+            formattedMsg = "(Message for Telegram) " + msg;
         }
+        return formattedMsg;
     }
 }
