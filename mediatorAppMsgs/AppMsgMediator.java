@@ -15,8 +15,10 @@ public class AppMsgMediator implements Mediator {
     @Override
     public void send(String msg, AppMsg appMsg) {
         for (AppMsg destinationAppMsg : destinations) {
-            String formattedMsg = setPrefix(destinationAppMsg, msg);
-            destinationAppMsg.receiveMessage(formattedMsg); 
+            if (appMsg != destinationAppMsg) {
+                String formattedMsg = setPrefix(destinationAppMsg, msg);
+                destinationAppMsg.receiveMessage(formattedMsg);
+            }
         }
     }
  
